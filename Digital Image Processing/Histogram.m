@@ -1,0 +1,25 @@
+% Program to obtain histogram equalization concept 
+I=imread('trees.tif'); 
+J=imcomplement(I); 
+imhist(J,100); 
+imshow(I); 
+title('original'); 
+figure,imshow(J); 
+title('complement'); 
+I=histeq(I); 
+figure,imhist(I,64); 
+title('equilized'); 
+figure,imhist(J,64); 
+title('histogram'); 
+n=numel(I); 
+p=imhist(I)/n; 
+figure,plot(p); 
+title('normalized'); 
+K=imadjust(I,[0;1],[0.4;1],0.5); 
+figure,imshow(K); 
+title('adjusted image'); 
+T=maketform('affine',[.3 0 0;.5 1 0;0 1 1]); 
+tformfwd([0,0],T); 
+I2=imtransform(I,T); 
+figure,imshow(I2); 
+title('forward image'); 
